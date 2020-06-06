@@ -1,23 +1,11 @@
 import express from 'express';
+import routes from './routes';
 
 const app = express();
 
-//GET : buscar uma ou mais informações do back-end
-//Post : criar uma nova informação no back-end
-//PUT : Atualizar uma informção existente
-//Delete : Remover
+app.use(express.json());
+app.use(routes);
 
-//
-
-app.get('/users', (request, response) => {
-    console.log('lista')
-
-
-    response.json([
-        'diero',
-        'daniel'
-
-    ]);
-});
+app.use('/tmp', )
 
 app.listen(3333);
