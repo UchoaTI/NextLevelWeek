@@ -1,4 +1,5 @@
 import Knex from 'knex';
+import ItensController from '../../controllers/ItensController';
 
 export async function seed(knex: Knex) {
     await knex('itens').insert([
@@ -10,3 +11,5 @@ export async function seed(knex: Knex) {
         { title: 'Óleo de Cozinha', image: 'oleo.svg' }
     ]);
 }
+
+;
