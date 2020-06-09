@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ChangeEvent } from 'react';
+import React, { useEffect, useState, ChangeEvent,FormEvent } from 'react';
 import {Link} from 'react-router-dom';
 import {FiArrowDownLeft} from 'react-icons/fi';
 import {Map,TileLayer, Marker} from 'react-leaflet';
@@ -28,7 +28,6 @@ interface IBGECityResponse{
 
 
 const CreatePoint = () =>{
-    const [itens, setItens] = useState<Iten[]>([]);
     const [ufs, setUfs] = useState<string[]>([]);
     const [cities, setCities] = useState<string[]>([]);
 
@@ -37,11 +36,12 @@ const CreatePoint = () =>{
     const [formData, setFormData ] = useState ({
         name: '',
         email:'',
-        whatsapp:'',
+        whatsapp:''
     })
 
     const[selectedCity, setSelectedCity] = useState('0'); 
     const[selectedUf, setSelectedUf] = useState('0');  
+   
     const[selectedPosition,setSelectedPosition] = useState<[number,number]>([0, 0]); 
     
     useEffect(() => {
@@ -52,11 +52,7 @@ const CreatePoint = () =>{
         })
     }, [])
     
-    useEffect(() => {
-        api.get('itens').then(response=>{
-           setItens(response.data)
-        })
-    }, []);
+    
 
     useEffect(()=>{
        axios.get<IBGEUFResponse[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados').then(response =>{
@@ -104,10 +100,17 @@ const CreatePoint = () =>{
             setFormData({...formData, [name]: value })
     }
 
-    function handleSelectIten (id: number) {
-        console.log ('teste', id);
-    }
+    
+    function handleSubmit(event: FormEvent){
+        
+        alert('Ponto registrado')
+        
+        };
 
+        
+
+        
+    
     return (
         <div id="page-create-point">
             <header>
@@ -119,7 +122,7 @@ const CreatePoint = () =>{
                 </Link>
             </header>
 
-            <form>
+            <form onSubmit={handleSubmit}>
               <h1 >cadastro do <br/> ponto de coleta</h1>   
 
               <fieldset>
@@ -201,19 +204,7 @@ const CreatePoint = () =>{
                     </div>
               </fieldset>
               <fieldset>
-                  <legend>
-                     <h2>Ítens de coleta</h2> 
-                     <span>Selecione um ou mais ítens abaixo</span>
-                  </legend>
-                    <ul className="items-grid">
-                        {itens.map(iten => (
-                        <li key={iten.id} onClick={()=> handleSelectIten(iten.id)}>
-                            <img src={iten.image_url} alt={iten.title}/>
-                        <span>{iten.title}</span>
-                        </li>
-                        ))}
-
-                    </ul>
+                 
               </fieldset>
 
               <button type="submit">
